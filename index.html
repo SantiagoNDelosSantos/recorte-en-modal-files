@@ -480,6 +480,31 @@
         let imgDivCrop = ""
         let imgDivPreview = ""
 
+
+        // Alerts con icono celeste: 
+        const SwalBlue = Swal.mixin({
+            // Color del background del Toast.
+            background: '#FFFFFF',
+            // El ancho se puede fijar acá.
+            width: '92%',
+            /* Color de los textos (Negro): */
+            color: '#000000',
+            iconColor: '#1298EA',
+            /* Animación lineal */
+            allowOutsideClick: false,
+            showClass: {
+                popup: 'custom-swal2-show',
+                backdrop: 'swal2-backdrop-show',
+                icon: 'swal2-icon-show'
+            },
+            hideClass: {
+                popup: 'custom-swal2-hide',
+                backdrop: 'swal2-backdrop-hide',
+                icon: 'swal2-icon-hide'
+            },
+        });
+
+
         // Función para preview (Clic sobre la imagen):
 
         // Dentro de la función preview()
@@ -488,7 +513,7 @@
             const imgBlobURL = URL.createObjectURL(archivo.blob);
 
             // Crear el modal de SweetAlert con HTML personalizado
-            Swal.fire({
+            SwalBlue.fire({
                 html: `
             <div id="cropperModal">
                 <img id="cropperImage" src="${imgBlobURL}" style="max-width: 100%;">
