@@ -514,29 +514,20 @@
                 html: `
                 <div id="cropperModal">
                     <img id="cropperImage" src="${imgBlobURL}" style="max-width: 100%;">
+                    <button id="closeSwal">Cerrar</button>
                 </div>`,
                 showConfirmButton: false, // Evita que se muestre el botón de confirmación
                 showCloseButton: false, // Muestra un botón para cerrar el modal
-            });
+            });     // Función para cancelar el recorte y cerrar el modal
+            let closeSwal = document.getElementById(closeSwal)
         }
 
-        // Función para recortar la imagen dentro del modal
-        function cropImage() {
-            const cropper = window.cropperInstance;
-            // Obtener la imagen recortada como un blob
-            cropper.getCroppedCanvas().toBlob((croppedBlob) => {
-                // Aquí puedes manejar el blob recortado según tus necesidades
-                // Por ejemplo, puedes mostrar una vista previa del resultado o guardarla en algún lugar
-                // Luego, cierra el modal de SweetAlert
-                Swal.close();
-            });
-        }
-
-        // Función para cancelar el recorte y cerrar el modal
-        function cancelCrop() {
+        closeSwal.addEventListener('click', (e) => {
+            e.preventDefault()
             // Cierra el modal de SweetAlert
             Swal.close();
-        }
+        })
+
 
         // FUNCIÓN PARA RECORTAR IMAGEN:
         function editImg(index) {
