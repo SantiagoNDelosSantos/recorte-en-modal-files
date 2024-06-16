@@ -512,30 +512,11 @@
             // Crear el modal de SweetAlert con HTML personalizado
             SwalBlue.fire({
                 html: `
-            <div id="cropperModal">
-                <img id="cropperImage" src="${imgBlobURL}" style="max-width: 100%;">
-                <div id="cropperToolbar">
-                    <!-- Aquí puedes agregar botones para realizar acciones como recortar, cancelar, etc. -->
-                    <button onclick="cropImage()">Recortar</button>
-                    <button onclick="cancelCrop()">Cancelar</button>
-                </div>
-            </div>
-        `,
+                <div id="cropperModal">
+                    <img id="cropperImage" src="${imgBlobURL}" style="max-width: 100%;">
+                </div>`,
                 showConfirmButton: false, // Evita que se muestre el botón de confirmación
-                showCloseButton: true, // Muestra un botón para cerrar el modal
-                customClass: {
-                    container: 'cropper-modal-container' // Clase CSS personalizada para el modal
-                },
-                onBeforeOpen: () => {
-                    // Inicializar Cropper.js dentro del modal
-                    const cropper = new Cropper(document.getElementById('cropperImage'), {
-                        aspectRatio: 1, // Puedes ajustar el aspect ratio según tus necesidades
-                        viewMode: 2 // Establece el modo de visualización del cropper
-                        // Puedes agregar más opciones de configuración según lo necesites
-                    });
-                    // Guardar la instancia de Cropper.js en una variable global si es necesario
-                    window.cropperInstance = cropper;
-                }
+                showCloseButton: false, // Muestra un botón para cerrar el modal
             });
         }
 
