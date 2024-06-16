@@ -193,6 +193,139 @@
             border: 0.15em solid #009FF5;
             border-bottom: 0.15em solid#009FF5;
         }
+
+
+
+
+        /* Sweet Alert*/
+        /* Bordes redondeados y border-bottom lineramente mas gris*/
+        .swal2-popup.swal2-modal.swal2-icon-success.swal2-show,
+        .swal2-popup.swal2-modal.swal2-icon-error.swal2-show,
+        .swal2-popup.swal2-modal.swal2-icon-info.swal2-show,
+        .swal2-popup.swal2-modal.swal2-icon-warning.swal2-show,
+        .swal2-container.swal2-center>.swal2-popup,
+        .swal2-popup.swal2-toast {
+            border-radius: 1.5em !important;
+            border-bottom: 0.1em solid rgba(174, 173, 173, 0.78) !important;
+        }
+
+        /* Margen hacia arriba en todos los iconos de las alerts */
+        .swal2-icon {
+            margin: 1.7em auto .6em;
+        }
+
+        /* Tamaño para el title de los alerts (El Toast tiene su size aparte, no es este). */
+        h2#swal2-title {
+            font-size: 1.3em !important;
+        }
+
+        /* Este es el tamaño de la fuente que este debajo de los title de los alerts. */
+        div:where(.swal2-container) .swal2-html-container {
+            font-size: 1em !important;
+        }
+
+        /* Tamaño para el texto del toast */
+        .swal2-popup.swal2-toast {
+            font-size: 0.65em !important;
+        }
+
+        /* Entiendo que agrega un scroll en caso de que el contenido no entre del todo en el alert*/
+        .swal2-container.swal2-center.swal2-backdrop-show {
+            overflow-y: auto;
+        }
+
+        /* Para que no se rompa el contenedor del toast, uno cuando aparece, el otro al desaparecer */
+        .swal2-container.swal2-top-end.swal2-backdrop-show,
+        .swal2-container.swal2-top-end.swal2-backdrop-hide {
+            width: auto !important;
+        }
+
+        /* Esto es basicamente para estar seguros de que el body del alert (El contendor principal) no tenga ningun padding raro y que este bien centrado */
+        body.swal2-shown.swal2-height-auto {
+            padding-right: 0 !important;
+        }
+
+        .swal2-timer-progress-bar {
+            background-color: #1298EA;
+        }
+
+        /* Border radius para los botones */
+        button.swal2-confirm.swal2-styled,
+        button.swal2-cancel.swal2-styled {
+            border-radius: 1em;
+        }
+
+        /* Con esto le sacamos una sombra tipo neomorfismo que tienen los botones al activarse el hover, como profundidad: */
+        div:where(.swal2-actions):not(.swal2-loading) .swal2-styled:hover {
+            background-image: none !important;
+        }
+
+        /* Esto es para sacarle ese focus asqueroso que aparece por defecto en los botones al cargarse el Sweet alert: */
+        .swal2-confirm:not([disabled]) {
+            box-shadow: none !important;
+            outline: none !important;
+        }
+
+        .swal2-cancel:not([disable]) {
+            box-shadow: none !important;
+            outline: none !important;
+        }
+
+        /* Estas son las transiciones para cuando un alert aparacece y otra para cuando desaparece: */
+        @keyframes custom-swal2-show {
+            0% {
+                transform: scale(0.7);
+                opacity: 0;
+            }
+
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        @keyframes custom-swal2-hide {
+            0% {
+                transform: scale(1);
+                opacity: 1;
+            }
+
+            100% {
+                transform: scale(0.7);
+                opacity: 0;
+            }
+        }
+
+        .custom-swal2-show {
+            animation-name: custom-swal2-show;
+            animation-duration: 0.2s;
+        }
+
+        .custom-swal2-hide {
+            animation-name: custom-swal2-hide;
+            animation-duration: 0.2s;
+        }
+
+        /* Botón X de cerrrar pestaña */
+        button.swal2-close {
+            box-shadow: none !important;
+            color: black !important;
+            border-top-right-radius: 0.5em;
+            background: rgba(0, 0, 0, 0.1);
+            border-bottom-left-radius: 0.5em;
+            border-top-left-radius: 0em;
+            border-bottom-right-radius: 0em;
+        }
+
+        div:where(.swal2-container) button:where(.swal2-close):hover {
+            color: #E23237 !important;
+            background: rgba(0, 0, 0, 0.1) !important;
+        }
+
+        /* Gap entre Cancelar y Confirmar */
+        .swal2-actions {
+            gap: 2em;
+        }
     </style>
 
 </head>
@@ -235,6 +368,7 @@
         <button id="uploadButton">Crear producto</button>
 
     </div>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 
     <!-- Agregar script de Cropper.js -->
@@ -242,8 +376,7 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.14.0/Sortable.min.js"></script>
 
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-   
+
 
     <script>
 
@@ -348,15 +481,15 @@
         let imgDivPreview = ""
 
         // Función para preview (Clic sobre la imagen):
-      
-// Dentro de la función preview()
-function preview(idSimil) {
-    const archivo = allFiles.find(file => file.idSimil === idSimil);
-    const imgBlobURL = URL.createObjectURL(archivo.blob);
 
-    // Crear el modal de SweetAlert con HTML personalizado
-    Swal.fire({
-        html: `
+        // Dentro de la función preview()
+        function preview(idSimil) {
+            const archivo = allFiles.find(file => file.idSimil === idSimil);
+            const imgBlobURL = URL.createObjectURL(archivo.blob);
+
+            // Crear el modal de SweetAlert con HTML personalizado
+            Swal.fire({
+                html: `
             <div id="cropperModal">
                 <img id="cropperImage" src="${imgBlobURL}" style="max-width: 100%;">
                 <div id="cropperToolbar">
@@ -366,41 +499,41 @@ function preview(idSimil) {
                 </div>
             </div>
         `,
-        showConfirmButton: false, // Evita que se muestre el botón de confirmación
-        showCloseButton: true, // Muestra un botón para cerrar el modal
-        customClass: {
-            container: 'cropper-modal-container' // Clase CSS personalizada para el modal
-        },
-        onBeforeOpen: () => {
-            // Inicializar Cropper.js dentro del modal
-            const cropper = new Cropper(document.getElementById('cropperImage'), {
-                aspectRatio: 1, // Puedes ajustar el aspect ratio según tus necesidades
-                viewMode: 2 // Establece el modo de visualización del cropper
-                // Puedes agregar más opciones de configuración según lo necesites
+                showConfirmButton: false, // Evita que se muestre el botón de confirmación
+                showCloseButton: true, // Muestra un botón para cerrar el modal
+                customClass: {
+                    container: 'cropper-modal-container' // Clase CSS personalizada para el modal
+                },
+                onBeforeOpen: () => {
+                    // Inicializar Cropper.js dentro del modal
+                    const cropper = new Cropper(document.getElementById('cropperImage'), {
+                        aspectRatio: 1, // Puedes ajustar el aspect ratio según tus necesidades
+                        viewMode: 2 // Establece el modo de visualización del cropper
+                        // Puedes agregar más opciones de configuración según lo necesites
+                    });
+                    // Guardar la instancia de Cropper.js en una variable global si es necesario
+                    window.cropperInstance = cropper;
+                }
             });
-            // Guardar la instancia de Cropper.js en una variable global si es necesario
-            window.cropperInstance = cropper;
         }
-    });
-}
 
-// Función para recortar la imagen dentro del modal
-function cropImage() {
-    const cropper = window.cropperInstance;
-    // Obtener la imagen recortada como un blob
-    cropper.getCroppedCanvas().toBlob((croppedBlob) => {
-        // Aquí puedes manejar el blob recortado según tus necesidades
-        // Por ejemplo, puedes mostrar una vista previa del resultado o guardarla en algún lugar
-        // Luego, cierra el modal de SweetAlert
-        Swal.close();
-    });
-}
+        // Función para recortar la imagen dentro del modal
+        function cropImage() {
+            const cropper = window.cropperInstance;
+            // Obtener la imagen recortada como un blob
+            cropper.getCroppedCanvas().toBlob((croppedBlob) => {
+                // Aquí puedes manejar el blob recortado según tus necesidades
+                // Por ejemplo, puedes mostrar una vista previa del resultado o guardarla en algún lugar
+                // Luego, cierra el modal de SweetAlert
+                Swal.close();
+            });
+        }
 
-// Función para cancelar el recorte y cerrar el modal
-function cancelCrop() {
-    // Cierra el modal de SweetAlert
-    Swal.close();
-}
+        // Función para cancelar el recorte y cerrar el modal
+        function cancelCrop() {
+            // Cierra el modal de SweetAlert
+            Swal.close();
+        }
 
         // FUNCIÓN PARA RECORTAR IMAGEN:
         function editImg(index) {
