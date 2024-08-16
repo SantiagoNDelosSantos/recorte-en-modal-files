@@ -327,12 +327,11 @@
             gap: 2em;
         }
 
-
-
-        div:where(.swal2-container).swal2-backdrop-show, div:where(.swal2-container).swal2-noanimation {
-    background: rgb(0 0 0) !important
-}
-
+        .swal2-popup.swal2-modal.custom-swal2-show {
+            background: black;
+            border-radius: 0 !important;
+            padding: 0;
+        }
     </style>
 
 </head>
@@ -488,7 +487,7 @@
         // Alerts con icono celeste: 
         const SwalBlue = Swal.mixin({
             // Color del background del Toast.
-            background: '#FFFFFF',
+            background: 'black',
             // El ancho se puede fijar acá.
             width: '92%',
             /* Color de los textos (Negro): */
